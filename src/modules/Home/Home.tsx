@@ -1,15 +1,19 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Button } from "components";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "store";
-import { toggleState } from "store";
+import { getInitialFakeState, toggleButtonState } from "store/buttonSlice";
 
 export const Home: FC = () => {
-  const buttonState = useSelector((state: RootState) => state.button.value);
+  const buttonState = useSelector((state: RootState) => state.button);
   const dispatch = useDispatch();
   const onToggleButtonState = () => {
-    dispatch(toggleState());
+    dispatch(toggleButtonState(buttonState.value));
   };
+
+  useEffect(() => {
+    dispatch(getInitialFakeState());
+  }, []);
 
   return (
     <>
